@@ -13,8 +13,8 @@ export const parseURLParams = (url: string) =>
 
 export const getBody = (req: IncomingMessage) =>
   new Promise<string>((resolve, reject) => {
-    let data = ""
-    req.on("data", chunk => (data += chunk))
-    req.on("end", () => resolve(data))
+    const data = []
+    req.on("data", chunk => data.push(chunk))
+    req.on("end", () => resolve(data.join("")))
     req.on("error", err => reject(err))
   })
